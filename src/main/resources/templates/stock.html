@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Stock Management')}"></head>
+<body>
+	<div th:replace="~{fragments/layout :: navbar(activePage='stock')}"></div>
+
+	<div class="container">
+		<h1 class="mb-4">Stock Management</h1>
+
+		<div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+		<div class="table-responsive">
+			<table class="table table-striped table-hover">
+				<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Category</th>
+						<th>Current Stock</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="product : ${products}">
+						<td th:text="${product.id}"></td>
+						<td th:text="${product.name}"></td>
+						<td th:text="${product.category != null ? product.category.name : '-'}"></td>
+						<td th:text="${product.quantity}"></td>
+						<td>
+							<div class="d-flex gap-1 flex-wrap">
+								<a th:href="@{/stock/entry/{id}(id=${product.id})}" class="btn btn-sm btn-success">Entry</a>
+								<a th:href="@{/stock/exit/{id}(id=${product.id})}" class="btn btn-sm btn-warning">Exit</a>
+								<a th:href="@{/stock/history/{id}(id=${product.id})}" class="btn btn-sm btn-info">History</a>
+							</div>
+						</td>
+					</tr>
+					<tr th:if="${#lists.isEmpty(products)}">
+						<td colspan="5" class="text-center text-muted">No products found.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

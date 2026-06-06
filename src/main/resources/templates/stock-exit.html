@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Stock Exit')}"></head>
+<body>
+	<div th:replace="~{fragments/layout :: navbar(activePage='stock')}"></div>
+
+	<div class="container">
+		<h1 class="mb-4">Stock Exit</h1>
+
+		<div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+		<div class="card mb-4 col-md-6">
+			<div class="card-body">
+				<h5 class="card-title" th:text="${product.name}">Product</h5>
+				<p class="card-text mb-1">
+					<strong>Current Stock:</strong> <span th:text="${product.quantity}"></span>
+				</p>
+				<p class="card-text mb-0">
+					<strong>Category:</strong>
+					<span th:text="${product.category != null ? product.category.name : '-'}"></span>
+				</p>
+			</div>
+		</div>
+
+		<form th:action="@{/stock/exit/{id}(id=${product.id})}" method="post" class="col-md-6">
+			<div class="mb-3">
+				<label for="quantity" class="form-label">Quantity</label>
+				<input type="number" id="quantity" name="quantity" class="form-control" min="1" required
+					th:value="${quantity}"
+					th:classappend="${errorMessage != null} ? 'is-invalid'">
+				<div class="invalid-feedback" th:if="${errorMessage != null}">Enter a valid quantity within available stock.</div>
+			</div>
+
+			<div class="d-flex gap-2">
+				<button type="submit" class="btn btn-warning">Register Exit</button>
+				<a th:href="@{/stock}" class="btn btn-secondary">Cancel</a>
+			</div>
+		</form>
+	</div>
+
+	<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>
