@@ -47,6 +47,7 @@
 								<th>Product</th>
 								<th>Type</th>
 								<th>Quantity</th>
+								<th>Reason</th>
 								<th>Created At</th>
 							</tr>
 						</thead>
@@ -58,10 +59,11 @@
 									<span th:if="${movement.type.name() == 'EXIT'}" class="badge bg-danger">EXIT</span>
 								</td>
 								<td th:text="${movement.quantity}"></td>
+								<td th:text="${movement.reason.label}"></td>
 								<td th:text="${#temporals.format(movement.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
 							</tr>
 							<tr th:if="${#lists.isEmpty(recentMovements)}">
-								<td colspan="4" class="text-center text-muted py-4">No stock movements yet.</td>
+								<td colspan="5" class="text-center text-muted py-4">No stock movements yet.</td>
 							</tr>
 						</tbody>
 					</table>

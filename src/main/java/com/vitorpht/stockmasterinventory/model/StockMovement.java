@@ -41,6 +41,10 @@ public class StockMovement {
 	@Column(nullable = false)
 	private Integer quantity;
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private MovementReason reason;
+
 	@Column(nullable = false, updatable = false)
 	private LocalDateTime createdAt;
 

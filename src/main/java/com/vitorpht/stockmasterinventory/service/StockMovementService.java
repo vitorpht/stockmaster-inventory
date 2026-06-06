@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.vitorpht.stockmasterinventory.model.MovementReason;
 import com.vitorpht.stockmasterinventory.model.MovementType;
 import com.vitorpht.stockmasterinventory.model.Product;
 import com.vitorpht.stockmasterinventory.model.StockMovement;
@@ -27,7 +28,7 @@ public class StockMovementService {
 		Product product = findProduct(productId);
 		product.setQuantity(product.getQuantity() + quantity);
 		productRepository.save(product);
-		return saveMovement(product, MovementType.ENTRY, quantity);
+		return saveMovement(product, MovementType.ENTRY, quantity, MovementReason.STOCK_ENTRY);
 	}
 
 	@Transactional
@@ -40,7 +41,11 @@ public class StockMovementService {
 		}
 		product.setQuantity(product.getQuantity() - quantity);
 		productRepository.save(product);
-		return saveMovement(product, MovementType.EXIT, quantity);
+		return saveMovement(product, MovementType.EXIT, quantity, MovementReason.STOCK_EXIT);
+	}
+
+	public StockMovement recordInitialStock(Product product) {
+		return saveMovement(product, MovementType.ENTRY, product.getQuantity(), MovementReason.INITIAL_STOCK);
 	}
 
 	public List<StockMovement> getMovementsByProduct(Long productId) {
@@ -63,11 +68,12 @@ public class StockMovementService {
 		}
 	}
 
-	private StockMovement saveMovement(Product product, MovementType type, Integer quantity) {
+	private StockMovement saveMovement(Product product, MovementType type, Integer quantity, MovementReason reason) {
 		StockMovement movement = new StockMovement();
 		movement.setProduct(product);
 		movement.setType(type);
 		movement.setQuantity(quantity);
+		movement.setReason(reason);
 		return stockMovementRepository.save(movement);
 	}
 
