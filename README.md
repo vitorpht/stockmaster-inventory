@@ -174,29 +174,27 @@ This ensures full traceability — every unit in inventory can be traced back to
 
 ## Screenshots
 
-> Replace the placeholder paths below with your actual screenshot files.
-
 ### Dashboard
 
 ![Dashboard](docs/screenshots/dashboard.png)
 
-*Overview with inventory statistics and recent stock movements.*
+*Summary cards showing total categories, products, and stock quantity, plus a table of the 10 most recent movements with type, quantity, and reason.*
 
 ---
 
 ### Categories
 
-![Categories List](docs/screenshots/categories.png)
+![Categories](docs/screenshots/categories.png)
 
-*Category listing with ID, name, and creation date.*
+*Category listing with ID, name, and creation date. Includes an **Add Category** button for creating new records.*
 
 ---
 
 ### Products
 
-![Products List](docs/screenshots/products.png)
+![Products](docs/screenshots/products.png)
 
-*Product listing with category, price, and stock quantity.*
+*Product listing with category, price, current stock quantity, and creation date. Initial stock is automatically tracked as a movement when a product is created.*
 
 ---
 
@@ -204,11 +202,15 @@ This ensures full traceability — every unit in inventory can be traced back to
 
 ![Stock Management](docs/screenshots/stock.png)
 
-*Stock management page with entry, exit, and history actions.*
+*Stock management page listing all products with current stock levels and **Entry**, **Exit**, and **History** actions per product.*
+
+---
+
+### Movement History
 
 ![Movement History](docs/screenshots/stock-history.png)
 
-*Per-product movement history with type, quantity, and reason.*
+*Per-product audit trail showing movement type, quantity, reason (`Initial Stock`, `Stock Entry`, `Stock Exit`), and timestamp — demonstrating full inventory traceability.*
 
 ---
 
