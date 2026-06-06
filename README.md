@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # StockMaster Inventory
 
 A web-based inventory management application built with **Java** and **Spring Boot**. StockMaster helps businesses organize products by category, track stock levels, and record every stock entry and exit with full movement history.
@@ -19,7 +18,7 @@ The application follows a layered architecture (Controller → Service → Repos
 - **Category Management** — Create and list product categories with validation
 - **Product Management** — Register products with name, description, price, quantity, and category assignment
 - **Stock Management** — Register stock entries and exits with business rule enforcement
-- **Movement History** — View per-product stock movement audit trail
+- **Movement History** — View per-product stock movement audit trail with reason tracking
 - **Validation** — Server-side validation using Jakarta Bean Validation
 - **Responsive UI** — Bootstrap 5 layout with navigation across all modules
 
@@ -27,6 +26,8 @@ The application follows a layered architecture (Controller → Service → Repos
 
 - Product price must be greater than zero
 - Product quantity cannot be negative
+- Initial stock automatically creates a stock movement when a product is registered with quantity greater than zero
+- Full inventory audit trail — every stock change is recorded with a type and reason
 - Stock entry increases product quantity
 - Stock exit decreases product quantity
 - Stock exit is blocked when quantity exceeds available stock
@@ -102,9 +103,9 @@ com.vitorpht.stockmasterinventory
 │ name             │   └───│ category_id (FK) │   └───│ product_id (FK)  │
 │ created_at       │       │ name             │       │ type (ENUM)      │
 └──────────────────┘       │ description      │       │ quantity         │
-                           │ price            │       │ created_at       │
-                           │ quantity         │       └──────────────────┘
-                           │ created_at       │
+                           │ price            │       │ reason (ENUM)    │
+                           │ quantity         │       │ created_at       │
+                           │ created_at       │       └──────────────────┘
                            └──────────────────┘
 
 Relationship: Category 1 ── * Product 1 ── * StockMovement
@@ -152,11 +153,22 @@ Records every stock entry or exit for audit and traceability.
 | `product` | Product | Many-to-one relationship |
 | `type` | MovementType | `ENTRY` or `EXIT` |
 | `quantity` | Integer | Moved quantity (must be > 0) |
+| `reason` | MovementReason | Business reason for the movement |
 | `createdAt` | LocalDateTime | Timestamp set automatically on creation |
 
 **Table:** `stock_movements`
 
 **Enum `MovementType`:** `ENTRY` increases stock · `EXIT` decreases stock
+
+**Enum `MovementReason`:**
+
+| Value | Label | Description |
+|---|---|---|
+| `INITIAL_STOCK` | Initial Stock | Automatically recorded when a new product is created with an initial quantity greater than zero |
+| `STOCK_ENTRY` | Stock Entry | Recorded when stock is manually added through the stock entry module |
+| `STOCK_EXIT` | Stock Exit | Recorded when stock is manually removed through the stock exit module |
+
+This ensures full traceability — every unit in inventory can be traced back to its origin through the movement history.
 
 ---
 
@@ -178,10 +190,6 @@ Records every stock entry or exit for audit and traceability.
 
 *Category listing with ID, name, and creation date.*
 
-![Category Form](docs/screenshots/category-form.png)
-
-*Form for creating a new category.*
-
 ---
 
 ### Products
@@ -189,10 +197,6 @@ Records every stock entry or exit for audit and traceability.
 ![Products List](docs/screenshots/products.png)
 
 *Product listing with category, price, and stock quantity.*
-
-![Product Form](docs/screenshots/product-form.png)
-
-*Form for registering a new product.*
 
 ---
 
@@ -202,13 +206,9 @@ Records every stock entry or exit for audit and traceability.
 
 *Stock management page with entry, exit, and history actions.*
 
-![Stock Entry](docs/screenshots/stock-entry.png)
-
-*Stock entry form.*
-
 ![Movement History](docs/screenshots/stock-history.png)
 
-*Per-product movement history.*
+*Per-product movement history with type, quantity, and reason.*
 
 ---
 
@@ -292,7 +292,3 @@ Developed as a portfolio project demonstrating **Java**, **Spring Boot**, **Spri
 ## License
 
 This project is open source and available for educational and portfolio purposes.
-=======
-# stockmaster-inventory
-Inventory Management System built with Java, Spring Boot and SQL
->>>>>>> 9ff22666590440b030681c52c1d3a3946b4246bb
