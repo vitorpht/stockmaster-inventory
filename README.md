@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # StockMaster Inventory
 
 A web-based inventory management application built with **Java** and **Spring Boot**. StockMaster helps businesses organize products by category, track stock levels, and record every stock entry and exit with full movement history.
@@ -291,3 +292,7 @@ Developed as a portfolio project demonstrating **Java**, **Spring Boot**, **Spri
 ## License
 
 This project is open source and available for educational and portfolio purposes.
+=======
+# stockmaster-inventory
+Inventory Management System built with Java, Spring Boot and SQL
+>>>>>>> 9ff22666590440b030681c52c1d3a3946b4246bb
